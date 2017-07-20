@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Reducer Composition with Arrays</title>
+  <script src="https://wzrd.in/standalone/expect@latest"></script>
+  <script src="https://wzrd.in/standalone/deep-freeze@latest"></script>
+</head>
+<body>
+  <div id='root'></div>
+  <script type="text/javascript">
+  // We decide that creating & updating todo in response to an action is a separate operation and will be handled by this todo function 
+  // For convention, todo should also accept two arguments: current trait and action being dispatched and it should return the next trait 
+  // State refers to the individual todo 
+   const todo = (state, action) => {
+   switch (action.type) {
+      case 'ADD_TODO':
+        return {
+          id: action.id, 
+          text: action.text,
+          completed: false
+        };
+      case 'TOGGLE_TODO':
+        if (state.id !== action.id) {
+          return state;
+        }
+
+        return {
+          ...state, 
+          completed: !state.completed
+        };
+      default:
+        return state;
+    }
+  }
+
+  // Function is hard to understand because it mixes two concerns:
+  //    How the todo is updated
+  //    How individual todos are updated 
+  // Want to extract other functions from it and call them so that every function only addresses a single concern 
+  const todos = (state = [], action) => {
+      switch(action.type) {
+        case 'ADD_TODO':
+           return [
+             ...state, 
+             todo(undefined, action)
+           ];
+        case 'TOGGLE_TODO':
+          return state.map(t => todo(t, action));
+        default:
+          return state;
+      }
+    };
+
+    const testAddTodo = () => {
+      const stateBefore = [];
+      const action = {
+        type: 'ADD_TODO', 
+        id: 0,
+        text: 'Learn Redux'
+      };
+      const stateAfter = [
+        {
+          id: 0, 
+          text: 'Learn Redux', 
+          completed: false
+        }
+      ];
+      
+      deepFreeze(stateBefore);
+      deepFreeze(action);
+      
+      expect(
+        todos(stateBefore, action)
+      ).toEqual(stateAfter);
+    };
+
+    const testToggleTodo = () => {
+      const stateBefore = [
+        {
+          id: 0, 
+          text: 'Learn Redux',
+          completed: false
+        },
+        {
+          id: 1, 
+          text: 'Go Shopping', 
+          completed: false
+        }
+      ];
+      const action = {
+        type: 'TOGGLE_TODO',
+        id: 1
+      };
+      const stateAfter= [
+        {
+          id: 0, 
+          text: 'Learn Redux',
+          completed: false
+        },
+        {
+          id: 1, 
+          text: 'Go Shopping', 
+          completed: true
+        }
+      ];
+      
+      deepFreeze(stateBefore);
+      deepFreeze(action);
+      
+      expect(
+        todos(stateBefore, action)
+      ).toEqual(stateAfter);
+    };
+
+    testAddTodo();
+    testToggleTodo();
+    console.log('All tests passed!');
+  </script>
+</body>
+</html>

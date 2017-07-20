@@ -11,18 +11,37 @@
 	<div id='root'></div>
 	<script>
 		// Avoiding Array Mutations 
+		// Instead of push, we’re gonna use the concat method, which does not modify the original array 
 		const addCounter = (list) => {
+			// return list.concat([0]);
+			// Using ES6 spread syntax 
 			return [...list, 0];
 		};
 
+		// We’re taking the parts before index and after index and concatenating them to get a new array 
 		const removeCounter = (list, index) => {
+			/*
+			return list
+				.slice(0, index)
+    			.concat(list.slice(index+1));
+    		*/
+			// Using ES6 spread syntax 
 			return [
 			...list.slice(0, index),
 			...list.slice(index+1)
 			];
 		};
 
+		// This takes in a list of numbers and index at which to increment by 1
+		// We take the parts before index, concat it with index+1 and take the parts after index 
 		const incrementCounter = (list, index) => {
+			/*
+			return list 
+			    .slice(0, index)
+			    .concat([list[index]+1])
+			    .concat(list.slice(index + 1));
+			*/
+			// Using ES6 spread syntax 
 			return [
 			...list.slice(0, index),
 			list[index]+1,
@@ -69,6 +88,11 @@
 		console.log('All tests passed!');
 
 		// Avoiding object mutations 
+		// Object.assign(target, …sources) only copies enumerable and own properties from a source object to a target object 
+		// the left arg {} is the one whose properties are going to be assigned. Its going to be mutated, so we pass in an empty object as the first arg to avoid mutating any data
+		// Every further argument will be considered as source objects whose properties will be copied to target object 
+		// If several sources specify different values for the same property, the last one wins 
+		// This is what we’re using to override the completed field despite what the original todo object says 
 		const toggleTodo = (todo) => {
 		  	return Object.assign({}, todo, {
 		    	completed: !todo.completed
