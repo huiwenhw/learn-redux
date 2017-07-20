@@ -1,7 +1,7 @@
 # 10 Avoid Object Mutations with Object.assign() and …spread 
 
 [Lesson Video](https://egghead.io/lessons/javascript-redux-avoiding-object-mutations-with-object-assign-and-spread)
-|| Full example [here](https://github.com/huiwenhw/learn-redux/blob/master/9_10_Avoid_Mutations.htm  l)
+|| Full example [here](https://github.com/huiwenhw/learn-redux/blob/master/9_10_Avoid_Mutations.html)
 
 **Lesson objective: Learn to avoid mutations in Redux**
 
@@ -12,27 +12,27 @@ We want to create a function called toggle todo that takes our todo object and f
 * But… it’s not allowed cause its mutating the original object 
 ```Javascript
 const toggleTodo = (todo) => {
-	todo.completed = !todo.completed;
-	return todo;
+  todo.completed = !todo.completed;
+  return todo;
 };
 
 const testToggleTodo = () => {
-	const todoBefore = {
-		id: 0,
-		text: 'Learn Redux', 
-		completed: false
-	};
-	const todoAfter = {
-		id: 0, 
-		text: 'Learn Redux', 
-		completed: true
-	};
+  const todoBefore = {
+    id: 0,
+    text: 'Learn Redux', 
+    completed: false
+  };
+  const todoAfter = {
+    id: 0, 
+    text: 'Learn Redux', 
+    completed: true
+  };
 
-	deepFreeze(todoBefore);
+  deepFreeze(todoBefore);
 
-	expect(
-		toggleTodo(todoBefore)
-	).toEqual(todoAfter);
+  expect(
+    toggleTodo(todoBefore)
+  ).toEqual(todoAfter);
 };
 
 testToggleTodo();
@@ -43,7 +43,7 @@ Error:
 at a (https://wzrd.in/standalone/expect@latest:2:6220)
 at t.value (https://wzrd.in/standalone/expect@latest:1:26228)
 at testToggleTodo (todadelipu.js:22:34)
-	at todadelipu.js:25:1"
+    at todadelipu.js:25:1"
 ```
 
 **Use Object.assign() method**
@@ -54,8 +54,8 @@ at testToggleTodo (todadelipu.js:22:34)
 * This is what we’re using to override the completed field despite what the original todo object says 
 ```Javascript
 const toggleTodo = (todo) => {
-	return Object.assign({}, todo, {
-		completed: !todo.completed;
-	});
+  return Object.assign({}, todo, {
+    completed: !todo.completed;
+  });
 };
 ```
