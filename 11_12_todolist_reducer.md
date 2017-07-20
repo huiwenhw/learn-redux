@@ -2,7 +2,7 @@
 
 [Lesson Video 1](https://egghead.io/lessons/javascript-redux-writing-a-todo-list-reducer-adding-a-todo) 
 || [Lesson Video 2](https://egghead.io/lessons/javascript-redux-writing-a-todo-list-reducer-toggling-a-todo)
-|| Full example [here](https://github.com/huiwenhw/learn-redux/blob/master/11_todolist_reducer.html)
+|| Full example [here](https://github.com/huiwenhw/learn-redux/blob/master/11_12_todolist_reducer.html)
 
 We want to create a todo list reducer function that handles two actions, adding a new todo and toggling an existing todo. 
 

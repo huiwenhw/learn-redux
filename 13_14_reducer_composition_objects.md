@@ -1,6 +1,6 @@
 # 13/14 Reducer composition with Arrays/Objects
 
-[Lesson Video 13](https://egghead.io/lessons/javascript-redux-reducer-composition-with-arrays)  || [Lesson Video 14](https://egghead.io/lessons/javascript-redux-reducer-composition-with-objects) || [13 example here](https://github.com/huiwenhw/learn-redux/blob/master/14_reducer_composition_objects.html) || 14 example [here](https://github.com/huiwenhw/learn-redux/blob/master/14_reducer_composition_objects.html)
+[Lesson Video 13](https://egghead.io/lessons/javascript-redux-reducer-composition-with-arrays) || [Lesson Video 14](https://egghead.io/lessons/javascript-redux-reducer-composition-with-objects) || 13 example [here](https://github.com/huiwenhw/learn-redux/blob/master/13_reducer_composition_arrays.html) || 14 example [here](https://github.com/huiwenhw/learn-redux/blob/master/14_reducer_composition_objects.html)
 
 **13 Reducer Composition with Arrays**
 * One reducer can be called by another reducer to update items inside an array 
