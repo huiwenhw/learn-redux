@@ -10,6 +10,7 @@
 <body>
 	<div id='root'></div>
 	<script>
+		// Avoiding Array Mutations 
 		const addCounter = (list) => {
 			return [...list, 0];
 		};
@@ -66,6 +67,35 @@
 		testRemoveCounter();
 		testIncrementCounter();
 		console.log('All tests passed!');
+
+		// Avoiding object mutations 
+		const toggleTodo = (todo) => {
+		  	return Object.assign({}, todo, {
+		    	completed: !todo.completed
+		  	});
+		};
+
+		const testToggleTodo = () => {
+		  	const todoBefore = {
+		    	id: 0,
+		    	text: 'Learn Redux', 
+		    	completed: false
+		  	};
+		 	const todoAfter = {
+		 	   id: 0, 
+		 	   text: 'Learn Redux', 
+		 	   completed: true
+		 	};
+		  
+		  	deepFreeze(todoBefore);
+		  
+		 	expect(
+		    	toggleTodo(todoBefore)
+		  	).toEqual(todoAfter);
+		};
+
+		testToggleTodo();
+		console.log('All tests passed!')
 	</script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 # 9 Avoiding Array Mutations with concat(), slice() and …spread 
 
 [Lesson Video](https://egghead.io/lessons/javascript-redux-avoiding-array-mutations-with-concat-slice-and-spread)
-|| Full example [here](https://github.com/huiwenhw/learn-redux/blob/master/9_Avoid_Mutations.html)
+|| Full example [here](https://github.com/huiwenhw/learn-redux/blob/master/9_10_Avoid_Mutations.html)
 
 In this lesson, we’ll use the [Expect Library](https://github.com/mjackson/expect) to test assertions and [deepFreeze](https://github.com/substack/deep-freeze) to make sure that our code is free from mutations 
 
@@ -19,7 +19,7 @@ We want to build a count release application - we’ll need the Add Counter, Rem
 
 * Appends 0 at end of past array 
 * Push modifies the original array. Using deepFreeze, we know that the attempt to push does not work.
-```
+```Javascript
 const addCounter = (list) => {
   list.push(0);
   return list;
@@ -47,13 +47,13 @@ Error:
     at todadelipu.js:17:1"
 ```
 * Instead of push, we’re gonna use the concat method, which does not modify the original array 
-```
+```Javascript
 const addCounter = (list) => {
   return list.concat([0]);
 };
 ```
 * Using the ES6 spread operator to write the same code in a more concise way 
-```
+```Javascript
 const addCounter = (list) => {
   return [...list, 0];
 };
@@ -64,7 +64,7 @@ const addCounter = (list) => {
 
 * Takes in a array of numbers and the index to skip in the array 
 * Usually, we use the splice method but that changes the original array 
-```
+```Javascript
 const removeCounter = (list, index) => {
   list.splice(index, 1);
   return list;
@@ -93,7 +93,7 @@ Error:
 ```
 * slice gives a part of the array from the beginning to the ending index 
 * We’re taking the parts before index and after index and concatenating them to get a new array 
-```
+```Javascript
 const removeCounter = (list, index) => {
   return list
     .slice(0, index)
@@ -101,7 +101,7 @@ const removeCounter = (list, index) => {
 };
 ```
 * using the ES6 array spread operator 
-```
+```Javascript
 const removeCounter = (list, index) => {
   return [
     ...list.slice(0, index),
@@ -115,7 +115,7 @@ const removeCounter = (list, index) => {
 
 * This takes in a list of numbers and index at which to increment by 1
 * Directly setting the index works, but its mutating the array 
-```
+```Javascript
 const incrementCounter = (list, index) => {
   list[index]++;
   return list;
@@ -144,7 +144,7 @@ Error:
 ```
 * We can use slice and concat which we did before for removeCounter 
 * We take the parts before index, concat it with index+1 and take the parts after index 
-```
+```Javascript
 const incrementCounter = (list, index) => {
   return list 
     .slice(0, index)
@@ -153,7 +153,7 @@ const incrementCounter = (list, index) => {
 };
 ```
 * Using ES6 spread syntax 
-```
+```Javascript
 const incrementCounter = (list, index) => {
   return [
     ...list.slice(0, index),
