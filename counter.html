@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>Counter</title>
+		<script src="https://npmcdn.com/expect/umd/expect.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.0.5/redux.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.5/react.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.5/react-dom.min.js"></script>
+		<!-- Using JSXTransformer for this example to work in the browser -->
+		<script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+	</head>
+	<body>
+		<h1> Redux-React Counter </h1>
+		<div id='root'></div>
+
+		<!-- Add type="text/jsx" to ensure that it gets compiled -->
+		<script type="text/jsx">
+			// reducer for redux 
+			const counter = (state = 0, action) => {
+				switch(action.type) {
+					case 'INCREMENT': 
+						return state + 1;
+					case 'DECREMENT':
+						return state - 1;
+					default: 
+						return state;
+				}
+			}
+
+			// Counter component 
+			// Specifies how current app state transforms into renderable output 
+			// and how callbakcs, passed via props, are bound to event handlers 
+			const Counter = ({
+				value, 
+				onIncrement, 
+				onDecrement
+			}) => (
+				<div> 
+					<h1> {value} </h1>
+					<button onClick={onIncrement}>+</button>
+					<button onClick={onDecrement}>-</button>
+				</div>
+				);
+
+			// Destructuring syntax to unpack createStore method from Redux 
+			// Same as: var createStore = Redux.createStore; 
+			const { createStore } = Redux;
+			const store = createStore(counter);
+			// createStore returns store object
+			// We're using counter as a reducer that manages state updates 
+
+			// Passes current state of store as prop to Counter comp 
+			// pass onIncrement & onDecrement as callbacks that store dispatches with appropriate actions
+			// Pass function of dispatch action to onIncrement in Counter 
+			const render = () => {
+				ReactDOM.render(
+						<Counter 
+						value={store.getState()}
+						onIncrement={() =>
+							{store.dispatch({type: 'INCREMENT'})}
+						}
+						onDecrement={() =>
+							{store.dispatch({type: 'DECREMENT'})}
+						}
+						/>,
+						document.getElementById('root')
+						);
+			};
+
+			// Subscribing to the store so that our render function runs anytime the state changes 
+			// so Counter gets the current state 
+			store.subscribe(render);
+			render(); 
+			// call it once to render initial state of app 
+		</script>
+	</body>
+</html>
